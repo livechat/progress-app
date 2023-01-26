@@ -36,12 +36,11 @@ export default ({ allResponse, allChatting, setTime, time, error }) => {
             {tabWithTimeInterval.map((e, i) => {
               return (
                 <Tab
-                  key={i}
+                  key={e}
                   onSelect={() => {
                     setTabId(e);
                     setTime(e);
                   }}
-                  key={e}
                   isSelected={e === tabId}
                 >
                   {e}

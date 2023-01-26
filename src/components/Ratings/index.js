@@ -14,7 +14,7 @@ import {
 } from "recharts";
 
 import { renderCustomizedLabel } from "../../utils/charts";
-import { TabsWrapper, TabsList, Tab, Toast } from "@livechat/design-system";
+import { TabsWrapper, TabsList, Tab } from "@livechat/design-system";
 
 import Spinner from "../Spinner";
 import "styled-components/macro";
@@ -22,7 +22,7 @@ import "styled-components/macro";
 const timeInterval = ["day", "week", "month", "year"];
 const COLORS = ["#d64646", "#4bb678"];
 
-const containerStyle = allChats => `
+const containerStyle = (allChats) => `
   background-color: white;
   border: solid 1px hsl(0, 0%, 90%);
   ${allChats > 0 && "padding-bottom: 40px;"}
@@ -40,17 +40,22 @@ const pieChartStyle = `
   border-top: solid 1px hsl(0, 0%, 90%);
 `;
 
-const lenendStyle = `
+const legendStyle = `
   justify-self: start;
+  display: grid;
+  place-items: center;
   > div {
     width: 15px;
     height: 15px;
     border-radius: 10px;
     margin: 7px;
   }
-  > span {
-    font-size: 13px;
-  }
+`;
+
+const legendTextStyle = `
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
 `;
 
 const goodStyle = `
@@ -76,6 +81,24 @@ const lineChartStyle = `
   marginTop: 50px 
 `;
 
+const noDataStyle = `
+  display: grid;
+  place-items: center;
+  height: 220px
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 22px;
+  border-top: solid 1px hsl(0, 0%, 90%);
+`;
+
+const chartLabelStyle = `
+text-align: center;
+font-size: 18px;
+font-weight: 600;
+line-height: 24px;
+margin-bottom: 16px;
+`;
+
 export default ({ allRatings, time, setTime }) => {
   const [tabId, setTabId] = useState(time);
   const ratings = allRatings[time];
@@ -95,9 +118,13 @@ export default ({ allRatings, time, setTime }) => {
       chats
     };
   });
+
   const allBad = data.reduce((a, b) => a + (b["bad"] || 0), 0);
   const allGood = data.reduce((a, b) => a + (b["good"] || 0), 0);
   const allChats = data.reduce((a, b) => a + (b["chats"] || 0), 0);
+
+  const lineChartTimeline =
+    time === "day" ? "Hourly" : time === "year" ? "Monthly" : "Daily";
 
   return (
     <>
@@ -111,13 +138,12 @@ export default ({ allRatings, time, setTime }) => {
             {timeInterval.map((e, i) => {
               return (
                 <Tab
-                  key={i}
+                  key={e}
                   css={tabStyle}
                   onSelect={() => {
                     setTabId(e);
                     setTime(e);
                   }}
-                  key={e}
                   isSelected={e === tabId}
                 >
                   {e}
@@ -150,6 +176,7 @@ export default ({ allRatings, time, setTime }) => {
                             outerRadius={70}
                             fill="#8884d8"
                             dataKey="value"
+                            stroke=""
                           >
                             {data.map((entry, index) => {
                               return (
@@ -162,20 +189,23 @@ export default ({ allRatings, time, setTime }) => {
                           </Pie>
                         </PieChart>
                       </ResponsiveContainer>
-                      <div css={lenendStyle}>
+                      <div css={legendStyle}>
                         <div css={goodStyle} />
-                        <span>good</span>
+                        <span css={legendTextStyle}>Good</span>
                         <div css={badStyle} />
-                        <span>bad</span>
+                        <span css={legendTextStyle}>Bad</span>
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <div>No rating</div>
+                  <div css={noDataStyle}>
+                    <p>No rating data available for this {time}. </p>
+                  </div>
                 )}
               </div>
             </div>
             <div css={barChartStyle}>
+              <div css={chartLabelStyle}>Ratings summary</div>
               <ResponsiveContainer>
                 <BarChart
                   data={[
@@ -194,6 +224,7 @@ export default ({ allRatings, time, setTime }) => {
               </ResponsiveContainer>
             </div>
             <div css={lineChartStyle}>
+              <div css={chartLabelStyle}>{lineChartTimeline} breakdown</div>
               <ResponsiveContainer>
                 <BarChart
                   width={500}
@@ -205,9 +236,16 @@ export default ({ allRatings, time, setTime }) => {
                   <XAxis dataKey="name" />
                   <YAxis />
                   <Tooltip />
-                  <Legend />
-                  <Bar dataKey="good" fill="#4bb678" />
-                  <Bar dataKey="bad" fill="#d64646" />
+                  <Legend
+                    wrapperStyle={{
+                      fontSize: "14px",
+                      fontWeight: "600",
+                      lineHeight: "20px",
+                      width: "100%"
+                    }}
+                  />
+                  <Bar dataKey="good" fill="#4bb678" name="Good" />
+                  <Bar dataKey="bad" fill="#d64646" name="Bad" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -215,14 +253,9 @@ export default ({ allRatings, time, setTime }) => {
         )}
       </div>
       {allChats <= 0 && (
-        <Toast
-          variant="info"
-          css={`
-            width: 100%;
-          `}
-        >
-          No chats this {time}.
-        </Toast>
+        <div css={noDataStyle}>
+          <p>No chats this {time}.</p>
+        </div>
       )}
     </>
   );

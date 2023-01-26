@@ -11,6 +11,13 @@ import { Toast } from "@livechat/design-system";
 import "styled-components/macro";
 import Spinner from "../Spinner";
 
+const chartLabelStyle = `
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+`;
+
 export default ({ data, time }) => {
   if (data && data.status === 403) {
     return (
@@ -18,11 +25,11 @@ export default ({ data, time }) => {
         css={`
           display: grid;
           padding: 30px;
-          grid-gap: 20px;
+          grid-gap: 12px;
           justify-items: center;
         `}
       >
-        <span>Chatting Time</span>
+        <div css={chartLabelStyle}>Chatting Time</div>
         <Toast
           variant="info"
           css={`
@@ -41,11 +48,11 @@ export default ({ data, time }) => {
 
   const chartData =
     time === "day"
-      ? Object.keys(data).map(e => ({
+      ? Object.keys(data).map((e) => ({
           name: e,
           minutes: data[e].minutes
         }))
-      : Object.keys(data).map(e => ({
+      : Object.keys(data).map((e) => ({
           name: e.substr(5),
           hours: data[e].hours
         }));
@@ -55,12 +62,12 @@ export default ({ data, time }) => {
       css={`
         display: grid;
         padding: 30px;
-        grid-gap: 20px;
+        grid-gap: 12px;
         justify-items: center;
         border-top: solid 1px hsl(0, 0%, 90%);
       `}
     >
-      <span>Chatting Time</span>
+      <div css={chartLabelStyle}>Chatting Time</div>
       <AreaChart
         width={350}
         height={250}

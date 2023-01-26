@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { createGlobalStyle } from "styled-components";
 import AccountsSDK from "@livechat/accounts-sdk";
 import "@livechat/design-system/dist/design-system.css";
+import "typeface-source-sans-pro";
 
 import config from "./utils/config";
 import App from "./components";
@@ -16,7 +17,8 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Source Sans Pro';
+    color: #424D57;
     overflow-x: hidden;
   }
 `;

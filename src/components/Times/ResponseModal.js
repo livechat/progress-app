@@ -5,6 +5,13 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, BarChart, Bar } from "recharts";
 import "styled-components/macro";
 import Spinner from "../Spinner";
 
+const chartLabelStyle = `
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+`;
+
 export default ({ data }) => {
   if (data && data.status === 403) {
     return (
@@ -12,11 +19,11 @@ export default ({ data }) => {
         css={`
           display: grid;
           padding: 30px;
-          grid-gap: 20px;
+          grid-gap: 12px;
           justify-items: center;
         `}
       >
-        <span>Response Time</span>
+        <div css={chartLabelStyle}>Response Time</div>
         <Toast
           variant="info"
           css={`
@@ -25,12 +32,6 @@ export default ({ data }) => {
         >
           Only for enterprise customers.
         </Toast>
-        {/* <a
-          href="https://www.livechatinc.com/kb/managing-the-subscription/"
-          target="_blank"
-        >
-          check our offer
-        </a> */}
       </div>
     );
   }
@@ -39,7 +40,7 @@ export default ({ data }) => {
     return <Spinner marginTop="200px" />;
   }
 
-  const chartData = Object.keys(data).map(e => ({
+  const chartData = Object.keys(data).map((e) => ({
     name: e.length > 6 ? e.substr(5) : e,
     seconds: data[e].first_response_time.seconds
       ? data[e].first_response_time.seconds
@@ -51,11 +52,11 @@ export default ({ data }) => {
       css={`
         display: grid;
         padding: 30px;
-        grid-gap: 20px;
+        grid-gap: 12px;
         justify-items: center;
       `}
     >
-      <span>Response Time</span>
+      <div css={chartLabelStyle}>Response Time</div>
       <BarChart
         width={350}
         height={250}

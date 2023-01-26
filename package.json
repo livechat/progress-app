@@ -13,7 +13,8 @@
     "react-loader-spinner": "^2.3.0",
     "react-scripts": "^2.1.8",
     "recharts": "^1.5.0",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "typeface-source-sans-pro": "^1.1.13"
   },
   "scripts": {
     "start": "HTTPS=true react-scripts start",
