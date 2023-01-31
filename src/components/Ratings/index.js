@@ -92,11 +92,11 @@ const noDataStyle = `
 `;
 
 const chartLabelStyle = `
-text-align: center;
-font-size: 18px;
-font-weight: 600;
-line-height: 24px;
-margin-bottom: 16px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+  margin-bottom: 16px;
 `;
 
 export default ({ allRatings, time, setTime }) => {
@@ -176,7 +176,7 @@ export default ({ allRatings, time, setTime }) => {
                             outerRadius={70}
                             fill="#8884d8"
                             dataKey="value"
-                            stroke=""
+                            stroke="none"
                           >
                             {data.map((entry, index) => {
                               return (
