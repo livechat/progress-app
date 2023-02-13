@@ -12,7 +12,7 @@ It shows the following information:
 
 # Preview
 
-![Alt Text](https://i.ibb.co/k6XdhJ9/progress.png)
+![progress-app](https://user-images.githubusercontent.com/74930846/218442243-58bdd7dc-bd59-46d2-ae15-e23b6c005c1d.png)
 
 # App setup
 
@@ -60,7 +60,7 @@ If you find some bugs, please create an issue in this repo. We will try to fix i
 
 # If you're new to LiveChat
 
-**LiveChat** is an online customer service software with live support, help desk software, and web analytics capabilities. It's used by more than 27,000 companies all over the world. For more info, check out [LiveChat for Developers](https://developers.livechatinc.com/).
+**LiveChat** is an online customer service software with live support, help desk software, and web analytics capabilities. It's used by more than 36,000 companies all over the world. For more info, check out [LiveChat for Developers](https://developers.livechatinc.com/).
 
 ---
 
